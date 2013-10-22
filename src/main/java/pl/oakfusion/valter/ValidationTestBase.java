@@ -1,0 +1,91 @@
+package pl.oakfusion.valter;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static org.fest.assertions.Assertions.assertThat;
+
+@RunWith(Parameterized.class)
+public abstract class ValidationTestBase<T> {
+
+    protected static final String TEST_PARAMETERS_LOG_FORMAT = "{index}: {0}";
+
+    private static final String DEFAULT_C_TOR_INITIALIZED_DESCRIPTION = "default c-tor";
+    private static final String VALID_OBJECT_DESCRIPTION = "valid object";
+    private static final int VALID_OBJECT_VIOLATIONS_COUNT = 0;
+    private static final int DEFAULT_VIOLATIONS_COUNT = 1;
+
+    private static final Logger LOG = LoggerFactory.getLogger(ValidationTestBase.class);
+
+    private T bean;
+    private String description;
+    private int expectedViolationsCount;
+
+    protected static List<Object[]> testCases(Object[]... beans) {
+        ArrayList<Object[]> list = new ArrayList<Object[]>();
+        for (Object[] a : beans) {
+            list.add(a);
+        }
+        return list;
+    }
+
+    protected static <T> Object[] testCase(String description, T bean, int violationsCount) {
+        return new Object[]{description, bean, violationsCount};
+    }
+
+    protected static <T> Object[] testCase(String description, T bean) {
+        return testCase(description, bean, DEFAULT_VIOLATIONS_COUNT);
+    }
+
+    protected static <T> Object[] validObjectTestCase(T bean) {
+        return testCase(VALID_OBJECT_DESCRIPTION, bean, VALID_OBJECT_VIOLATIONS_COUNT);
+    }
+
+    protected static <T> Object[] defaultCtorTestCase(T bean) {
+        return defaultConstructorTestCase(bean, DEFAULT_VIOLATIONS_COUNT);
+    }
+
+    protected static <T> Object[] defaultConstructorTestCase(T bean, int violationsCount) {
+        return testCase(DEFAULT_C_TOR_INITIALIZED_DESCRIPTION, bean, violationsCount);
+    }
+
+    public ValidationTestBase(String description, T bean, int violationsCount) {
+        this.description = description;
+        this.bean = bean;
+        this.expectedViolationsCount = violationsCount;
+    }
+
+    private void logViolations(Set<ConstraintViolation<T>> violations) {
+        for (ConstraintViolation<T> v : violations) {
+            LOG.debug("    {}", v);
+        }
+    }
+
+    public Set<ConstraintViolation<T>> validate() {
+        Set<ConstraintViolation<T>> violations = getValidator().validate(bean);
+        LOG.debug("{}; violations: {}; expected violations: {}", description, violations.size(), expectedViolationsCount);
+        logViolations(violations);
+        return violations;
+    }
+
+    public void assertViolations(Set<ConstraintViolation<T>> violations) {
+        assertThat(violations.size()).isEqualTo(expectedViolationsCount);
+    }
+
+    @Test
+    public void shouldValidate() {
+        assertViolations(validate());
+    }
+
+    public abstract Validator getValidator();
+}
+
