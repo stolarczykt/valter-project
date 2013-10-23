@@ -1,5 +1,5 @@
 package pl.oakfusion.valter;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +27,8 @@ public abstract class ValidationTestBase<T> {
     private static final int DEFAULT_VIOLATIONS_COUNT = 1;
 
     private static final Logger LOG = LoggerFactory.getLogger(ValidationTestBase.class);
+
+    protected static Validator validator;
 
     private T bean;
     private String description;
@@ -71,7 +75,7 @@ public abstract class ValidationTestBase<T> {
     }
 
     public Set<ConstraintViolation<T>> validate() {
-        Set<ConstraintViolation<T>> violations = getValidator().validate(bean);
+        Set<ConstraintViolation<T>> violations = validator.validate(bean);
         LOG.debug("{}; violations: {}; expected violations: {}", description, violations.size(), expectedViolationsCount);
         logViolations(violations);
         return violations;
@@ -86,6 +90,10 @@ public abstract class ValidationTestBase<T> {
         assertViolations(validate());
     }
 
-    public abstract Validator getValidator();
+    @BeforeClass
+    public static void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
 }
 
