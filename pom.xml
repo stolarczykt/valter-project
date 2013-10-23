@@ -10,7 +10,6 @@
     <properties>
         <junit.version>4.11</junit.version>
         <slf4j.version>1.7.2</slf4j.version>
-        <fest.assert.version>1.4</fest.assert.version>
         <javax.validation.version>1.0.0.GA</javax.validation.version>
     </properties>
 
@@ -25,12 +24,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert</artifactId>
-            <version>${fest.assert.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public abstract class ValidationTestBase<T> {
@@ -82,7 +82,7 @@ public abstract class ValidationTestBase<T> {
     }
 
     public void assertViolations(Set<ConstraintViolation<T>> violations) {
-        assertThat(violations.size()).isEqualTo(expectedViolationsCount);
+        assertEquals(expectedViolationsCount, violations.size());
     }
 
     @Test
