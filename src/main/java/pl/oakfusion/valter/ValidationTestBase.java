@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
@@ -36,9 +37,7 @@ public abstract class ValidationTestBase<T> {
 
     protected static List<Object[]> testCases(Object[]... beans) {
         ArrayList<Object[]> list = new ArrayList<Object[]>();
-        for (Object[] a : beans) {
-            list.add(a);
-        }
+        list.addAll(asList(beans));
         return list;
     }
 
@@ -48,6 +47,10 @@ public abstract class ValidationTestBase<T> {
 
     protected static <T> Object[] testCase(String description, T bean) {
         return testCase(description, bean, DEFAULT_VIOLATIONS_COUNT);
+    }
+
+    protected static ViolationsCountCase valterCase(String description) {
+        return new ViolationsCountCase(description);
     }
 
     protected static <T> Object[] validObjectTestCase(T bean) {
