@@ -8,7 +8,9 @@ import static org.junit.Assert.fail;
 
 public class FieldModifier<T> {
     private static final Cloner CLONER = new Cloner();
-    private static final String NO_SUCH_FIELD_FAIL_MESSAGE = "Maybe, probably field: '%s' was not found.";
+    private static final String NO_SUCH_FIELD_FAIL_MESSAGE_FORMAT = "Maybe, probably field: '%s' was not found.";
+    private static final String CAN_NOT_ACCESS_FIELD_MESSAGE_FORMAT = "Can not access field: '%s'";
+    private static final String CAN_NOT_SET_FIELD_MESSAGE_FORMAT = "Can not set field '%s', type mismatch.";
     private final CaseBuilder<T> caseBuilder;
     private final ViolationCase<T> violationsCase;
 
@@ -21,21 +23,23 @@ public class FieldModifier<T> {
 
         T bean = CLONER.deepClone(caseBuilder.getBean());
 
-        modifyFieldValue(value, bean);
+        modifyFieldValue(value, bean, violationsCase.getFieldName());
 
         return new CaseAppender<>(violationsCase, caseBuilder, bean);
     }
 
-    private void modifyFieldValue(Object value, T bean) {
+    private void modifyFieldValue(Object value, T bean, String fieldName) {
         try {
             Class<?> c = bean.getClass();
-            Field field = c.getDeclaredField(violationsCase.getFieldName());
+            Field field = c.getDeclaredField(fieldName);
             field.setAccessible(true);
             field.set(bean, value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            fail(format(NO_SUCH_FIELD_FAIL_MESSAGE, violationsCase.getFieldName()));
+        } catch (NoSuchFieldException e) {
+            fail(format(NO_SUCH_FIELD_FAIL_MESSAGE_FORMAT, fieldName));
+        } catch (IllegalAccessException e) {
+            fail(format(CAN_NOT_ACCESS_FIELD_MESSAGE_FORMAT, fieldName));
+        } catch (IllegalArgumentException e) {
+            fail(format(CAN_NOT_SET_FIELD_MESSAGE_FORMAT, fieldName));
         }
     }
-
-
 }
