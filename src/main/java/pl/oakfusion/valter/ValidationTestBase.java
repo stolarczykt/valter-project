@@ -10,12 +10,14 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public abstract class ValidationTestBase<T> {
@@ -33,7 +35,7 @@ public abstract class ValidationTestBase<T> {
 
     private T bean;
     private String description;
-    private int expectedViolationsCount;
+    private Object expectedViolation;
 
     protected static List<Object[]> testCases(Object[]... beans) {
         ArrayList<Object[]> list = new ArrayList<Object[]>();
@@ -49,10 +51,6 @@ public abstract class ValidationTestBase<T> {
         return testCase(description, bean, DEFAULT_VIOLATIONS_COUNT);
     }
 
-    protected static ViolationsCountCase valterCase(String description) {
-        return new ViolationsCountCase(description);
-    }
-
     protected static <T> Object[] validObjectTestCase(T bean) {
         return testCase(VALID_OBJECT_DESCRIPTION, bean, VALID_OBJECT_VIOLATIONS_COUNT);
     }
@@ -65,10 +63,14 @@ public abstract class ValidationTestBase<T> {
         return testCase(DEFAULT_C_TOR_INITIALIZED_DESCRIPTION, bean, violationsCount);
     }
 
-    public ValidationTestBase(String description, T bean, int violationsCount) {
+    protected static <T> CaseBuilder forBean(T bean) {
+        return new CaseBuilder<T>(bean);
+    }
+
+    public ValidationTestBase(String description, T bean, Object violationsCount) {
         this.description = description;
         this.bean = bean;
-        this.expectedViolationsCount = violationsCount;
+        this.expectedViolation = violationsCount;
     }
 
     private void logViolations(Set<ConstraintViolation<T>> violations) {
@@ -79,13 +81,27 @@ public abstract class ValidationTestBase<T> {
 
     public Set<ConstraintViolation<T>> validate() {
         Set<ConstraintViolation<T>> violations = validator.validate(bean);
-        LOG.debug("{}; violations: {}; expected violations: {}", description, violations.size(), expectedViolationsCount);
+        LOG.debug("{}; violations: {}; expected violations: {}", description, violations.size(), expectedViolation);
         logViolations(violations);
         return violations;
     }
 
     public void assertViolations(Set<ConstraintViolation<T>> violations) {
-        assertEquals(expectedViolationsCount, violations.size());
+        if(expectedViolation instanceof Integer) {
+            assertEquals(expectedViolation, violations.size());
+        } else {
+            assertTrue(violationsContainsAnnotation(violations, expectedViolation));
+        }
+    }
+
+    private boolean violationsContainsAnnotation(Set<ConstraintViolation<T>> violations, Object expectedViolation) {
+        for (ConstraintViolation<T> violation : violations) {
+            Class<? extends Annotation> annotatoinType = violation.getConstraintDescriptor().getAnnotation().annotationType();
+            if(annotatoinType.equals(expectedViolation)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Test

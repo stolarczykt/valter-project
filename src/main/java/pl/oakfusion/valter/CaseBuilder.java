@@ -1,16 +1,27 @@
 package pl.oakfusion.valter;
 
-public class CaseBuilder {
+import java.util.ArrayList;
+import java.util.List;
 
-    private final String description;
-    private final int expectedViolationsCount;
+public class CaseBuilder<T> {
 
-    public CaseBuilder(String description, int expectedViolationsCount) {
-        this.description = description;
-        this.expectedViolationsCount = expectedViolationsCount;
+    T bean;
+    ArrayList<Object[]> list = new ArrayList<Object[]>();
+
+
+    public CaseBuilder(T bean) {
+        this.bean = bean;
     }
 
-    public <T> Object[] forBean(T bean) {
-        return new Object[]{description, bean, expectedViolationsCount};
+    public List<Object[]> toList() {
+        return list;
+    }
+
+    public ViolationCase field(String fieldName) {
+        return new ViolationCase<T>(this, fieldName);
+    }
+
+    public void addToList(Object[] objects) {
+        list.add(objects);
     }
 }
