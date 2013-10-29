@@ -64,7 +64,7 @@ public abstract class ValidationTestBase<T> {
     }
 
     protected static <T> CaseBuilder forBean(T bean) {
-        return new CaseBuilder<T>(bean);
+        return new CaseBuilder<>(bean);
     }
 
     public ValidationTestBase(String description, T bean, Object violationsCount) {
@@ -96,8 +96,8 @@ public abstract class ValidationTestBase<T> {
 
     private boolean violationsContainsAnnotation(Set<ConstraintViolation<T>> violations, Object expectedViolation) {
         for (ConstraintViolation<T> violation : violations) {
-            Class<? extends Annotation> annotatoinType = violation.getConstraintDescriptor().getAnnotation().annotationType();
-            if(annotatoinType.equals(expectedViolation)) {
+            Class<? extends Annotation> annotationType = violation.getConstraintDescriptor().getAnnotation().annotationType();
+            if(annotationType.equals(expectedViolation)) {
                 return true;
             }
         }

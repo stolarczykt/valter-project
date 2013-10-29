@@ -5,8 +5,8 @@ import java.util.List;
 
 public class CaseBuilder<T> {
 
-    T bean;
-    ArrayList<Object[]> list = new ArrayList<Object[]>();
+    private final T bean;
+    private ArrayList<Object[]> list = new ArrayList<Object[]>();
 
 
     public CaseBuilder(T bean) {
@@ -18,10 +18,14 @@ public class CaseBuilder<T> {
     }
 
     public ViolationCase field(String fieldName) {
-        return new ViolationCase<T>(this, fieldName);
+        return new ViolationCase<>(this, fieldName);
     }
 
     public void addToList(Object[] objects) {
         list.add(objects);
+    }
+
+    T getBean() {
+        return bean;
     }
 }

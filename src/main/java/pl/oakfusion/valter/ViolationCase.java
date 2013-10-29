@@ -2,9 +2,9 @@ package pl.oakfusion.valter;
 
 public class ViolationCase<T> {
 
-    CaseBuilder<T> caseBuilder;
-    String fieldName;
-    Object expected;
+    private final CaseBuilder<T> caseBuilder;
+    private final String fieldName;
+    private Object expected;
 
     public ViolationCase(CaseBuilder<T> caseBuilder, String fieldName) {
         this.caseBuilder = caseBuilder;
@@ -12,17 +12,25 @@ public class ViolationCase<T> {
     }
 
     public FieldModifier shouldFailOnce() {
-        this.expected = new Integer(1);
-        return new FieldModifier<T>(this);
+        this.expected = 1;
+        return new FieldModifier<>(this, caseBuilder);
     }
 
     public FieldModifier shouldFailTimes(Integer expected) {
        this.expected = expected;
-        return new FieldModifier<T>(this);
+        return new FieldModifier<>(this, caseBuilder);
     }
 
     public FieldModifier shouldFailWith(Class expected) {
        this.expected = expected;
-        return new FieldModifier<T>(this);
+        return new FieldModifier<>(this, caseBuilder);
+    }
+
+    String getFieldName() {
+        return fieldName;
+    }
+
+    Object getExpected() {
+        return expected;
     }
 }

@@ -1,34 +1,37 @@
 package pl.oakfusion.valter;
 
 import com.rits.cloning.Cloner;
-import org.fest.reflect.reference.TypeRef;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static org.fest.reflect.core.Reflection.field;
+import java.lang.reflect.Field;
 
 public class FieldModifier<T> {
     private static final Cloner CLONER = new Cloner();
-    ViolationCase<T> violationsCase;
+    private final CaseBuilder<T> caseBuilder;
+    private final ViolationCase<T> violationsCase;
 
-    private static final Logger LOG = LoggerFactory.getLogger(FieldModifier.class);
-
-    public FieldModifier(ViolationCase<T> violationsCase) {
+    public FieldModifier(ViolationCase<T> violationsCase, CaseBuilder<T> caseBuilder) {
         this.violationsCase = violationsCase;
+        this.caseBuilder = caseBuilder;
     }
 
-    public CaseAppender when(Object value) {
+    public CaseAppender<T> when(Object value) {
 
-        T bean = CLONER.deepClone(violationsCase.caseBuilder.bean);
+        T bean = CLONER.deepClone(caseBuilder.getBean());
 
-        field(violationsCase.fieldName).ofType(new TypeRef<Object>() {
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-        }).in(bean).set(value);
+        modifyFieldValue(value, bean);
 
-        return new CaseAppender<T>(this, bean);
+        return new CaseAppender<>(violationsCase, caseBuilder, bean);
     }
+
+    private void modifyFieldValue(Object value, T bean) {
+        try {
+            Class<?> c = bean.getClass();
+            Field field = c.getDeclaredField(violationsCase.getFieldName());
+            field.setAccessible(true);
+            field.set(bean, value);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

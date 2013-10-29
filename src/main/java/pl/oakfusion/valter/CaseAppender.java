@@ -1,16 +1,18 @@
 package pl.oakfusion.valter;
 
 public class CaseAppender<T> {
-    FieldModifier fieldModifier;
-    T bean;
+    private final ViolationCase<T> violationCase;
+    private final CaseBuilder<T> caseBuilder;
+    private final T bean;
 
-    public CaseAppender(FieldModifier fieldModifier, T bean) {
-        this.fieldModifier = fieldModifier;
-        this.bean = bean;
-    }
+        public CaseAppender(ViolationCase<T> violationCase, CaseBuilder<T> caseBuilder, T bean) {
+            this.violationCase = violationCase;
+            this.caseBuilder = caseBuilder;
+            this.bean = bean;
+        }
 
     public CaseBuilder withDescription(String description) {
-        fieldModifier.violationsCase.caseBuilder.addToList(new Object[]{description, bean, fieldModifier.violationsCase.expected});
-        return fieldModifier.violationsCase.caseBuilder;
+        caseBuilder.addToList(new Object[]{description, bean, violationCase.getExpected()});
+        return caseBuilder;
     }
 }
