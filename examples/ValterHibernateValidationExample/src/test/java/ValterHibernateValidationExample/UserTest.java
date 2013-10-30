@@ -19,13 +19,11 @@ public class UserTest extends ValidationTestBase<User> {
 
         User validBean = new User("Valter", "valter@valtersky.val", 26);
 
-        List list = forBean(validBean)
+        return forBean(validBean)
                 .field("name").shouldFailWith(NotEmpty.class).when("").withDescription("empty name")
                 .field("email").shouldFailWith(Email.class).when("email@").withDescription("wrong email")
                 .field("email").shouldFailOnce().when("valter@").withDescription("one violation on email field")
                 .field("age").shouldFailWith(Range.class).when(2).withDescription("out of range")
                 .toList();
-
-        return list;
     }
 }
