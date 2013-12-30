@@ -5,11 +5,11 @@ public class CaseAppender<T> {
     private final CaseBuilder<T> caseBuilder;
     private final T bean;
 
-        public CaseAppender(ViolationCase<T> violationCase, CaseBuilder<T> caseBuilder, T bean) {
-            this.violationCase = violationCase;
-            this.caseBuilder = caseBuilder;
-            this.bean = bean;
-        }
+    public CaseAppender(ViolationCase<T> violationCase, CaseBuilder<T> caseBuilder, T bean) {
+        this.violationCase = violationCase;
+        this.caseBuilder = caseBuilder;
+        this.bean = bean;
+    }
 
     public CaseBuilder withDescription(String description) {
         caseBuilder.addToList(new Object[]{description, bean, violationCase.getExpected()});

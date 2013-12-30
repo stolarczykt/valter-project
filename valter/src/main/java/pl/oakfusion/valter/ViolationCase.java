@@ -17,12 +17,12 @@ public class ViolationCase<T> {
     }
 
     public FieldModifier shouldFailTimes(Integer expected) {
-       this.expected = expected;
+        this.expected = expected;
         return new FieldModifier<>(this, caseBuilder);
     }
 
     public FieldModifier shouldFailWith(Class expected) {
-       this.expected = expected;
+        this.expected = expected;
         return new FieldModifier<>(this, caseBuilder);
     }
 
