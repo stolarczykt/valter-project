@@ -4,6 +4,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/oakfusion/valter-project.git</developerConnection>
+        <url>http://github.com/oakfusion/valter-project</url>
     </scm>
     <groupId>pl.oakfusion</groupId>
     <artifactId>valter</artifactId>
