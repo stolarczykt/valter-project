@@ -3,8 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <scm>
-        <url>https://github.com/oakfusion/valter-project</url>
-        <developerConnection>scm:git:ssh://git@github.com:oakfusion/valter-project.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/oakfusion/valter-project.git</developerConnection>
     </scm>
     <groupId>pl.oakfusion</groupId>
     <artifactId>valter</artifactId>
