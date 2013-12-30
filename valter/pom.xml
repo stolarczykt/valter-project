@@ -4,11 +4,10 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/oakfusion/valter-project.git</developerConnection>
-      <tag>valter-1.0</tag>
-  </scm>
+    </scm>
     <groupId>pl.oakfusion</groupId>
     <artifactId>valter</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <junit.version>4.11</junit.version>
         <slf4j.version>1.7.2</slf4j.version>
