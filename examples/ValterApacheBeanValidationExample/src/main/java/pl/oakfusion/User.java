@@ -5,14 +5,14 @@ import org.apache.bval.constraints.NotEmpty;
 
 public class User {
 
-    @NotEmpty
-    String name;
+	@NotEmpty
+	String name;
 
-    @Email
-    String email;
+	@Email
+	String email;
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
+	public User(String name, String email) {
+		this.name = name;
+		this.email = email;
+	}
 }

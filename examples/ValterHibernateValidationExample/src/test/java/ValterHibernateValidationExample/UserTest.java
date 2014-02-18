@@ -14,7 +14,7 @@ public class UserTest extends ValidationTestBase<User> {
 		super(description, bean, violationsCount);
 	}
 
-	@Parameters(name = TEST_PARAMETERS_LOG_FORMAT)
+	@Parameters(name = DEFAULT_TESTS_NAME_PATTERN)
 	public static List<Object[]> params() {
 
 		User validBean = new User("Valter", "valter@valtersky.val", 26);

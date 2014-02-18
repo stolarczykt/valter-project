@@ -6,13 +6,15 @@ public class ViolationCase<T> {
 	private final String fieldName;
 	private Object expected;
 
+	private static final int DEFAULT_VIOLATIONS_COUNT = 1;
+
 	public ViolationCase(CaseBuilder<T> caseBuilder, String fieldName) {
 		this.caseBuilder = caseBuilder;
 		this.fieldName = fieldName;
 	}
 
 	public FieldModifier shouldFailOnce() {
-		this.expected = 1;
+		this.expected = DEFAULT_VIOLATIONS_COUNT;
 		return new FieldModifier<>(this, caseBuilder);
 	}
 
