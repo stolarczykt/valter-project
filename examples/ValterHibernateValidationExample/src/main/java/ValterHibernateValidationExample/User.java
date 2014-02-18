@@ -7,18 +7,18 @@ import org.hibernate.validator.constraints.Range;
 
 public class User {
 
-    @NotEmpty
-    private String name;
+	@NotEmpty
+	private String name;
 
-    @Email
-    private String email;
+	@Email
+	private String email;
 
-    @Range(min=16, max=150)
-    private int age;
+	@Range(min = 16, max = 150)
+	private int age;
 
-    public User(String notEmptyField, String emailField, int age) {
-        this.name = notEmptyField;
-        this.email = emailField;
-        this.age = age;
-    }
+	public User(String notEmptyField, String emailField, int age) {
+		this.name = notEmptyField;
+		this.email = emailField;
+		this.age = age;
+	}
 }
