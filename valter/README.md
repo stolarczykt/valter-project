@@ -1,3 +1,6 @@
+valter-project
+==============
+
 Valter was created to test beans using JSR303 annotations. Thanks to Valter it's possible to create JUnit parametrized tests for such beans.
 
 ##Requirements
@@ -15,7 +18,6 @@ Step 3. Implement public static method which returns List<Object[]>. Use Valter'
 
 
 **Example:**
-
 
 ```java
 public class UserTest extends ValidationTestBase<User> {
@@ -38,6 +40,7 @@ public class UserTest extends ValidationTestBase<User> {
 	}
 }
 ```
+
 **Note:** if You are using JUnit older than 4.11 You need to remove `(name = DEFAULT_TESTS_NAME_PATTERN)`.
 
 
