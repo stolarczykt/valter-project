@@ -1,3 +1,6 @@
+![Valter's logo](https://github.com/oakfusion/valter-project/raw/master/valter.png)
+
+
 valter-project
 ==============
 
