@@ -4,7 +4,7 @@
 valter-project
 ==============
 
-Valter was created to test beans using JSR303 annotations. Thanks to Valter it's possible to create JUnit parametrized tests for such beans.
+Valter was created to test beans using JSR303 validation. Thanks to Valter it's possible to create JUnit parametrized tests for such beans.
 
 ##Requirements
 Valter requires three libraries to be included to the project where You will be using it:
