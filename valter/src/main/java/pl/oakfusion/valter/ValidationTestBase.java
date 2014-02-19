@@ -28,16 +28,16 @@ public abstract class ValidationTestBase<T> {
 
 	private T bean;
 	private String description;
-	private Object expectedViolation;
+	private Object expected;
 
 	protected static <T> CaseBuilder forBean(T bean) {
 		return new CaseBuilder<>(bean);
 	}
 
-	public ValidationTestBase(String description, T bean, Object violationsCount) {
+	public ValidationTestBase(String description, T bean, Object expected) {
 		this.description = description;
 		this.bean = bean;
-		this.expectedViolation = violationsCount;
+		this.expected = expected;
 	}
 
 	private void logViolations(Set<ConstraintViolation<T>> violations) {
@@ -48,16 +48,16 @@ public abstract class ValidationTestBase<T> {
 
 	public Set<ConstraintViolation<T>> validate() {
 		Set<ConstraintViolation<T>> violations = validator.validate(bean);
-		LOG.debug("{}; violations: {}; expected violations: {}", description, violations.size(), expectedViolation);
+		LOG.debug("{}; violations: {}; expected violations: {}", description, violations.size(), expected);
 		logViolations(violations);
 		return violations;
 	}
 
 	public void assertViolations(Set<ConstraintViolation<T>> violations) {
-		if (expectedViolation instanceof Integer) {
-			assertEquals(expectedViolation, violations.size());
+		if (expected instanceof Integer) {
+			assertEquals(expected, violations.size());
 		} else {
-			assertTrue(violationsContainsAnnotation(violations, expectedViolation));
+			assertTrue(violationsContainsAnnotation(violations, expected));
 		}
 	}
 

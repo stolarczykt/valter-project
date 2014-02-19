@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserTest extends ValidationTestBase<User> {
 
-	public UserTest(String description, User bean, Object violationsCount) {
-		super(description, bean, violationsCount);
+	public UserTest(String description, User bean, Object expected) {
+		super(description, bean, expected);
 	}
 
 	@Parameters(name = DEFAULT_TESTS_NAME_PATTERN)

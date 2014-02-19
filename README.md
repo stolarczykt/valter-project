@@ -26,8 +26,8 @@ Step 3. Implement public static method which returns `List<Object[]>`. Use Valte
 ```java
 public class UserTest extends ValidationTestBase<User> {
 
-	public UserTest(String description, User bean, Object violationsCount) {
-		super(description, bean, violationsCount);
+	public UserTest(String description, User bean, Object expected) {
+		super(description, bean, expected);
 	}
 
 	@Parameters(name = DEFAULT_TESTS_NAME_PATTERN)
