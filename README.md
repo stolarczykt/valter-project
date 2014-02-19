@@ -14,11 +14,11 @@ Using Valter can be described in three steps:
 
 Step 1. Create bean with fields annotated with JSR303 annotations.
 
-Step 2. Create test class witch extends pl.oakfusion.valter.ValidationTestBase class and create constructor matching super.
+Step 2. Create test class witch extends `pl.oakfusion.valter.ValidationTestBase` class and create constructor matching super.
 
-Step 3. Implement public static method which returns List<Object[]>. Use Valter's fluent interface to create this list.
+Step 3. Implement public static method which returns `List<Object[]>`. Use Valter's fluent interface to create this list.
 
-   **Note:** This method must be annotated with @Parameters annotation, because JUnit parametrized runner will use it to run tests cases.
+   **Note:** This method must be annotated with `@Parameters` annotation, because JUnit parametrized runner will use it to run tests cases.
 
 
 **Example:**
@@ -53,23 +53,14 @@ Creating tests cases for parametrized test should be done by Valter's fluent int
 Example usage can looks as follow:
 
 
+```java
+forBean(validBean)  //passing valid bean object to Valter
+	.field("name")  //passing field name which annotations You want to test
+	.shouldFailWith(NotEmpty.class) //there You can call three methods, depends of it what You want to test: count of violations or class of annotation which will fail
+	.when("")       //passing value which would cause violation
+	.withDescription("empty name") //setting up name of the test case
+	.toList();      building List<Object[]>
 ```
-1.  forBean(validBean)
-2.      .field("name")
-3.      .shouldFailWith(NotEmpty.class)
-4.      .when("")
-5.      .withDescription("empty name")
-6.      .toList();
-```
-
-
-Line 1: passing valid bean object to Valter
-Line 2: passing field name which annotations You want to test
-Line 3: there You can call three methods, depends of it what You want to test: count of violations or class of annotation which will fail
-Line 4: passing value which would cause violation
-Line 5: setting up name of test case
-Line 6: building List<Object[]>
-
 
 In this repo You can find two examples of Valter usage. One is for [Hibernate validator](https://github.com/oakfusion/valter-project/tree/master/examples/ValterHibernateValidationExample) and the other one for [Apache bean validator](https://github.com/oakfusion/valter-project/tree/master/examples/ValterApacheBeanValidationExample).
 
