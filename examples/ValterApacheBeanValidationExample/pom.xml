@@ -11,7 +11,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<valter.version>1.0-SNAPSHOT</valter.version>
+		<valter.version>1.0</valter.version>
 		<geronimo.version>1.1</geronimo.version>
 		<bval.version>0.5</bval.version>
 	</properties>

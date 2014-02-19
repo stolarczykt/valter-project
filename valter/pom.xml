@@ -2,14 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<scm>
-		<connection>scm:git:https://github.com/oakfusion/valter-project.git</connection>
-		<developerConnection>scm:git:https://github.com/oakfusion/valter-project.git</developerConnection>
-	</scm>
 	<groupId>pl.oakfusion</groupId>
 	<artifactId>valter</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Valter</name>
+	<version>1.0</version>
+	<description>Valter was created to test beans using JSR303 annotations.</description>
+	<url>https://github.com/oakfusion/valter-project</url>
+	<licenses>
+		<license>
+			<name>LGPL 2.1</name>
+			<url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/oakfusion/valter-project</url>
+		<connection>scm:git:git://github.com/oakfusion/valter-project.git</connection>
+		<developerConnection>scm:git:git@github.com:oakfusion/valter-project.git</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<id>stolarczykt</id>
+			<name>Tomasz Stolarczyk</name>
+			<email>stolarczykt@gmail.com</email>
+		</developer>
+	</developers>
+
 	<properties>
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.7.2</slf4j.version>
@@ -49,31 +67,6 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.4.2</version>
-			</plugin>
 		</plugins>
-		<extensions>
-			<extension>
-				<groupId>org.kuali.maven</groupId>
-				<artifactId>kuali-wagon-s3</artifactId>
-				<version>1.0.22</version>
-			</extension>
-		</extensions>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>pl.oakfusion.maven.repository</id>
-			<name>Oakfusion release repository</name>
-			<url>s3://oakfusion-repo/repository/release</url>
-		</repository>
-		<snapshotRepository>
-			<id>pl.oakfusion.maven.repository.snapshot</id>
-			<name>Oakfusion snapshot repository</name>
-			<url>s3://oakfusion-repo/repository/snapshot</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
