@@ -67,5 +67,5 @@ Line 5: setting up name of test case
 Line 6: building List<Object[]>
 
 
-In this repo You can find two examples of Valter usage. One is for Hibernate validator and the other one for Apache bean validator.
+In this repo You can find two examples of Valter usage. One is for [Hibernate validator](https://github.com/oakfusion/valter-project/tree/master/examples/ValterHibernateValidationExample) and the other one for [Apache bean validator](https://github.com/oakfusion/valter-project/tree/master/examples/ValterApacheBeanValidationExample).
 
