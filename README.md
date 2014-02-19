@@ -11,9 +11,13 @@ Valter requires three libraries to be included to the project where You will be 
 
 ##Usage
 Using Valter can be described in three steps:
+
 Step 1. Create bean with fields annotated with JSR303 annotations.
+
 Step 2. Create test class witch extends pl.oakfusion.valter.ValidationTestBase class and create constructor matching super.
+
 Step 3. Implement public static method which returns List<Object[]>. Use Valter's fluent interface to create this list.
+
    **Note:** This method must be annotated with @Parameters annotation, because JUnit parametrized runner will use it to run tests cases.
 
 
