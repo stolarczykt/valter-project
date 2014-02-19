@@ -5,13 +5,13 @@ import java.util.List;
 
 public class BaseCaseBuilder {
 
-	private ArrayList<Object[]> list = new ArrayList<Object[]>();
+	private ArrayList<Object[]> list = new ArrayList<>();
 
 	public List<Object[]> toList() {
 		return list;
 	}
 
-	public void addToList(Object[] objects) {
+	void addToList(Object[] objects) {
 		list.add(objects);
 	}
 
