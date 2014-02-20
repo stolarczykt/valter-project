@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 	<name>Valter</name>
 	<version>1.0</version>
-	<description>Valter was created to test beans using JSR303 validation.</description>
+	<description>Valter exists to test JSR303 validated beans.</description>
 	<url>https://github.com/oakfusion/valter-project</url>
 	<licenses>
 		<license>

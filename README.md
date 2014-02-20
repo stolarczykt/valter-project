@@ -12,6 +12,15 @@ Valter requires three libraries to be included to the project where You will be 
 - SLF4J,
 - library with JSR303 bean's validator (in example hibernate validator).
 
+##Maven
+```xml
+<dependency>
+	<groupId>pl.oakfusion</groupId>
+	<artifactId>valter</artifactId>
+	<version>1.0</version>
+</dependency>
+```
+
 ##Usage
 Using Valter can be described in three steps:
 
@@ -65,5 +74,88 @@ forBean(validBean)  //passing valid bean object to Valter
 	.toList();      building List<Object[]>
 ```
 
-In this repo You can find two examples of Valter usage. One is for [Hibernate validator](https://github.com/oakfusion/valter-project/tree/master/examples/ValterHibernateValidationExample) and the other one for [Apache bean validator](https://github.com/oakfusion/valter-project/tree/master/examples/ValterApacheBeanValidationExample).
+##Example using Hibernate validator
 
+1. Create maven project and add required dependencies to pom.xml:
+```xml
+<dependencies>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.11</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>pl.oakfusion</groupId>
+		<artifactId>valter</artifactId>
+		<version>1.0</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>4.3.0.Final</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>1.7.2</version>
+	</dependency>
+</dependencies>
+```
+
+2. Create bean with annotated fields:
+```java
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Range;
+
+public class User {
+
+	@NotEmpty
+	private String name;
+
+	@Email
+	private String email;
+
+	@Range(min = 16, max = 150)
+	private int age;
+
+	public User(String notEmptyField, String emailField, int age) {
+		this.name = notEmptyField;
+		this.email = emailField;
+		this.age = age;
+	}
+}
+```
+
+3. Create test class:
+```java
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
+import org.junit.runners.Parameterized.Parameters;
+import pl.oakfusion.valter.ValidationTestBase;
+
+import java.util.List;
+
+public class UserTest extends ValidationTestBase<User> {
+
+	public UserTest(String description, User bean, Object expected) {
+		super(description, bean, expected);
+	}
+
+	@Parameters(name = DEFAULT_TESTS_NAME_PATTERN)
+	public static List<Object[]> params() {
+
+		User validBean = new User("Valter", "valter@valtersky.val", 26);
+
+		return forBean(validBean)
+				.field("name").shouldFailWith(NotEmpty.class).when("").withDescription("empty name")
+				.field("email").shouldFailWith(Email.class).when("email@").withDescription("wrong email")
+				.field("email").shouldFailOnce().when("valter@").withDescription("one violation on email field")
+				.field("age").shouldFailWith(Range.class).when(2).withDescription("out of range")
+				.toList();
+	}
+}
+```
