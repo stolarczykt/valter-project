@@ -71,7 +71,7 @@ forBean(validBean)  //passing valid bean object to Valter
 	.shouldFailWith(NotEmpty.class) //there You can call three methods, depends of it what You want to test: count of violations or class of annotation which will fail
 	.when("")       //passing value which would cause violation
 	.withDescription("empty name") //setting up name of the test case
-	.toList();      building List<Object[]>
+	.toList();      //building List<Object[]>
 ```
 
 ##Example using Hibernate validator
@@ -159,3 +159,5 @@ public class UserTest extends ValidationTestBase<User> {
 	}
 }
 ```
+
+**Have fun!**
