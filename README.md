@@ -76,7 +76,7 @@ forBean(validBean)  //passing valid bean object to Valter
 
 ##Example using Hibernate validator
 
-1. Create maven project and add required dependencies to pom.xml:
+   Create maven project and add required dependencies to pom.xml:
 ```xml
 <dependencies>
 	<dependency>
@@ -104,7 +104,7 @@ forBean(validBean)  //passing valid bean object to Valter
 </dependencies>
 ```
 
-2. Create bean with annotated fields:
+   Create bean with annotated fields:
 ```java
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Email;
@@ -129,7 +129,7 @@ public class User {
 }
 ```
 
-3. Create test class:
+   Create test class:
 ```java
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
